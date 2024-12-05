@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+    /* font-weight: 595; */
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    background-color: #25282b;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.bs-datepicker { 
+    z-index: 1000;
+}

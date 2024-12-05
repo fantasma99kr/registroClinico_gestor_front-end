@@ -1,0 +1,220 @@
+<section class="contenedor" style="margin-bottom: 50px;">
+  <mat-card class="contenedor-card"
+    style="background-color: #1a1c1f; display: flex; justify-content: center; align-items: center; width: 90%!important;">
+    <mat-card-header>
+      <mat-card-title style="color: #ffffff; margin-bottom: 25px;">
+        Historial Clínico
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content style="background-color: #111315; border-radius: 15px; padding: 15px;">
+      <label>En esta sección podrás registrar información clínica personal, podrás registrar estudios, descripción de
+        enfermedades crónicas(cáncer, diabetes, VIH/SIDA, etc.), con la documentación sobre estas enfermedades que
+        ayuden a los médicos a proporcionar un mejor tratamiento en las citas.<strong> Esta información solo será
+          accesible por los médicos, si tú lo permites al generar una cita en un consultorio</strong></label>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Contenedor del formulario -->
+  <mat-card class="contenedor-card" style="background-color: #1a1c1f;">
+    <mat-card-header>
+      <mat-card-title style="color: #ffffff; margin-bottom: 25px;">
+        Formulario de registro del historial clínico
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Formulario -->
+      <form class="form">
+        <!-- Titulo -->
+        <mat-form-field>
+          <mat-label>Nombre</mat-label>
+          <input matInput #titulo required type="text">
+          <mat-icon matSuffix></mat-icon>
+        </mat-form-field>
+        <!-- Descripcion -->
+        <mat-form-field>
+          <mat-label>Descripción</mat-label>
+          <textarea matInput #descripcion maxlength="200"></textarea>
+        </mat-form-field>
+        <mat-divider style="padding: 5px; width: 90%;"></mat-divider>
+        <!-- Archivos -->
+        <!-- PDF -->
+        <div style="width: 100%; padding: 10px;">
+          <label>Selecciona un archivo pdf: </label>
+          <input #pdf id="pdf" type="file" accept="application/pdf" />
+        </div>
+        <!-- IMG -->
+        <div style="width: 100%; padding: 10px;">
+          <label>Selecciona una imagen: </label>
+          <input #image id="image" type="file" accept=".jpg, .jpeg, .png" />
+        </div>
+
+        <button mat-flat-button (click)="registro($event, titulo.value, descripcion.value)">Registrar historial</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+
+  <!-- Contenedor de la Tabla -->
+  <mat-card class="contenedor-card" style="background-color: #1a1c1f; overflow: auto;">
+    <mat-card-header style="display: flex; justify-content: center; padding: 15px;">
+      <mat-card-title style="color: #ffffff;">
+        Historial Clínico
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Busqueda en la tabla -->
+      <mat-form-field style="width: 100%;">
+        <mat-label>Busqueda</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+      <div class="table-container">
+        <!-- Tabla del historial clinico -->
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- id_historial -->
+          <ng-container matColumnDef="id_historial">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No Historial </th>
+            <td mat-cell *matCellDef="let element" style="font-weight: bold;">{{element.id_historial}}</td>
+          </ng-container>
+
+          <!-- titulo -->
+          <ng-container matColumnDef="titulo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+          </ng-container>
+
+
+          <!-- descripcion -->
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+          </ng-container>
+
+
+          <!-- imagen -->
+          <ng-container matColumnDef="imagen">
+            <th mat-header-cell *matHeaderCellDef> Imagen </th>
+            <td mat-cell *matCellDef="let element">
+              <!-- Verifica si la imagen no está vacía y muestra el botón -->
+              @if(element.imagen.trim() !== ""){
+              <button title="Imagen" (click)="openModal(template, element.id_historial, element.titulo, element.imagen)"
+                mat-icon-button>
+                <mat-icon>image</mat-icon>
+              </button>
+              }
+            </td>
+          </ng-container>
+
+          <!-- documento -->
+          <ng-container matColumnDef="documento">
+            <th mat-header-cell *matHeaderCellDef> Documento </th>
+            <td mat-cell *matCellDef="let element">
+              <!-- Valida que exista un documento -->
+              @if(element.documento.trim() !== ""){
+              <!-- Manda el nombre del documento para descargarlo -->
+              <button title="Descargar documento" (click)="documento($event,element.documento)" mat-icon-button>
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              }
+            </td>
+          </ng-container>
+
+          <!-- editar -->
+          <ng-container matColumnDef="editar">
+            <th mat-header-cell *matHeaderCellDef> Editar </th>
+            <td mat-cell *matCellDef="let element">
+              <button title="Borrar"
+                (click)="modalEditar(updateModal, element.id_historial, element.titulo, element.descripcion)"
+                mat-icon-button>
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- eliminar -->
+          <ng-container matColumnDef="eliminar">
+            <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+            <td mat-cell *matCellDef="let element">
+              <button title="Borrar" (click)="eliminar(element.id_historial)" mat-icon-button>
+                <mat-icon style="color: #d52926;">delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <!-- Cabecera -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <!-- Filas -->
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <!-- Numero de registros  -->
+        <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<!-- Modal para modatrar las imagenes -->
+<ng-template #template id="darkModal">
+  <!-- Header del modal -->
+  <div class="modal-header bg-dark text-white top-modal"
+    style="display: flex; align-items: center; justify-content: space-between;">
+    <h4 style="font-size: 20px;">No.{{numRH}}</h4>
+    <h4 style="font-size: 20px;">Nombre: {{nomRH}}</h4>
+    <!-- Boton para cerrar -->
+    <button mat-icon-button (click)="modalRef.hide()"><mat-icon style="color: #ffffff;">close</mat-icon></button>
+  </div>
+  <!-- Contenido del modal -->
+  <div class="modal-body bg-dark text-white" style="display: flex; align-items: center; justify-content: center;">
+    <!-- Cambia la imagen dinamicamente -->
+    <img [src]="imagenModal" style="width: 90%; height: 90%;" />
+  </div>
+  <!-- Footer del modal -->
+  <div class="modal-footer bg-dark text-white bottom-modal">
+  </div>
+</ng-template>
+
+<!-- Modal para modatrar las imagenes -->
+<ng-template #updateModal id="darkModal">
+  <!-- Header del modal -->
+  <div class="modal-header bg-dark text-white top-modal"
+    style="display: flex; align-items: center; justify-content: space-between;">
+    <h4 style="font-size: 20px;">No.{{numRH}}</h4>
+    <h4 style="font-size: 20px;">Nombre: {{nomRH}}</h4>
+    <!-- Boton para cerrar -->
+    <button mat-icon-button (click)="modalRef.hide()"><mat-icon style="color: #ffffff;">close</mat-icon></button>
+  </div>
+  <!-- Contenido del modal -->
+  <div class="modal-body bg-dark text-white" style="display: flex; align-items: center; justify-content: center;">
+    <form class="form">
+      <!-- Titulo -->
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput #UpdateTitulo [value]="nomRH" required type="text">
+        <mat-icon matSuffix></mat-icon>
+      </mat-form-field>
+      <!-- Descripcion -->
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea matInput #UpdateDescripcion [value]="descripcionUp" maxlength="200"></textarea>
+      </mat-form-field>
+      <mat-divider style="padding: 5px; width: 90%;"></mat-divider>
+      <!-- Archivos -->
+      <!-- PDF -->
+      <div style="width: 100%; padding: 10px;">
+        <label>Selecciona un archivo pdf: </label>
+        <input #pdfUpdate id="pdfUpdate" type="file" accept="application/pdf" />
+      </div>
+      <!-- IMG -->
+      <div style="width: 100%; padding: 10px;">
+        <label>Selecciona una imagen: </label>
+        <input #imageUpdate id="imageUpdate" type="file" accept=".jpg, .jpeg, .png" />
+      </div>
+      <button mat-flat-button (click)="update($event, UpdateTitulo.value, UpdateDescripcion.value)">Registrar
+        historial</button>
+    </form>
+  </div>
+  <!-- Footer del modal -->
+  <div class="modal-footer bg-dark text-white bottom-modal">
+  </div>
+</ng-template>

@@ -1,0 +1,327 @@
+<section class="contenedor" style="margin-bottom: 50px;">
+
+  <!--  -->
+  <mat-card class="contenedor-card"
+    style="background-color: #1a1c1f; display: flex; justify-content: center; align-items: center; width: 90%!important;">
+    <mat-card-header>
+      <mat-card-title style="color: #ffffff; margin-bottom: 25px;">
+        Gestor de citas información
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content style="background-color: #111315; border-radius: 15px; padding: 15px;">
+      <label>En esta sección se podrá editar el estado de la cita, visualizar el historial clínico del paciente si es
+        que este lo permitió al generar la cita, <strong>y una vez terminada la cita por parte del médico o cancelada,
+          ya no se podrá ver el historial ni generar la receta de esa cita.</strong></label>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Contenedor de la Tabla -->
+  <mat-card class="contenedor-card" style="background-color: #1a1c1f; overflow: auto;">
+    <mat-card-header style="display: flex; justify-content: center; padding: 15px;">
+      <mat-card-title style="color: #ffffff;">
+        Gestor de citas
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- Busqueda en la tabla -->
+      <mat-form-field style="width: 100%;">
+        <mat-label>Busqueda</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+      <!-- Tabla -->
+      <div class="table-container">
+        <!-- Tabla del historial clinico -->
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- id_historial -->
+          <ng-container matColumnDef="id_cita">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No Cita </th>
+            <td mat-cell *matCellDef="let element" style="font-weight: bold;">{{element.id_cita}}</td>
+          </ng-container>
+
+          <!-- Historial -->
+          <ng-container matColumnDef="historial">
+            <th mat-header-cell *matHeaderCellDef> Historial </th>
+            <td mat-cell *matCellDef="let element">
+              @if((element.permiso_historial === "si") && (element.estado !== "terminada") && (element.estado !==
+              "cancelada")){
+              <button mat-icon-button
+                (click)="openModal(historialModal, element.id_paciente, element.nombre_paciente, element.id_consultorio)">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              }
+            </td>
+          </ng-container>
+
+
+          <!-- descripcion -->
+          <ng-container matColumnDef="horario">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Horario </th>
+            <td mat-cell *matCellDef="let element" style="font-weight: bold;">
+              {{element.horario}}
+            </td>
+          </ng-container>
+
+          <!-- Receta -->
+          <ng-container matColumnDef="receta">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Receta </th>
+            <td mat-cell *matCellDef="let element" style="font-weight: bold;">
+              @if((element.estado !== "terminada") && (element.estado !== "cancelada")){
+              <button mat-icon-button
+                (click)="openModal(recetaModal, element.id_paciente, element.nombre_paciente, element.id_consultorio)">
+                <mat-icon title="Generar receta de la cita">
+                  create_new_folder
+                </mat-icon>
+              </button>
+              }
+            </td>
+          </ng-container>
+
+
+          <!-- imagen -->
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+            <td mat-cell *matCellDef="let element" style="font-weight: bold;">
+              {{element.fecha}}
+            </td>
+          </ng-container>
+
+          <!-- documento -->
+          <ng-container matColumnDef="datos_adicionales">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Datos Adicionales </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.datos_adicionales}}
+            </td>
+          </ng-container>
+
+          <!-- Estado -->
+          <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+            <td mat-cell *matCellDef="let element" style="font-weight: bold;">
+              @if((element.estado !== "terminada") && (element.estado !== "cancelada")){
+              <button mat-icon-button (click)="modalEditar(updateModal,element.id_cita)">
+                <mat-icon [title]="element.estado">
+                  edit
+                </mat-icon>
+              </button>
+              } @else {
+              <label>{{element.estado}}</label>
+              }
+            </td>
+          </ng-container>
+
+          <!-- eliminar -->
+          <ng-container matColumnDef="tipo_cita">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de cita </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.tipo_cita}}
+            </td>
+          </ng-container>
+
+          <!-- Cabecera -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <!-- Filas -->
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <!-- Paginador  -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<!-- Modal del historial del paciente -->
+<ng-template #historialModal id="darkModal">
+  <!-- Header del modal -->
+  <div class="modal-header bg-dark text-white top-modal"
+    style="display: flex; align-items: center; justify-content: space-between;">
+    <h4 style="font-size: 20px;">Nombre paciente: {{nombre}}</h4>
+    <!-- Boton para cerrar -->
+    <button mat-icon-button (click)="modalRef.hide()"><mat-icon style="color: #ffffff;">close</mat-icon></button>
+  </div>
+  <!-- Contenido del modal -->
+  <div class="modal-body bg-dark text-white" style="display: flex; align-items: center; justify-content: center;">
+    <!-- Tabla para mostrar la informacion del paciente -->
+    <div class="table-container">
+      <!-- Tabla del historial clinico -->
+      <table mat-table [dataSource]="historialSource" matSort>
+
+        <!-- id_historial -->
+        <ng-container matColumnDef="id_historial">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> No Historial </th>
+          <td mat-cell *matCellDef="let element" style="font-weight: bold;">{{element.id_historial}}</td>
+        </ng-container>
+
+        <!-- titulo -->
+        <ng-container matColumnDef="titulo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+        </ng-container>
+
+
+        <!-- descripcion -->
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+          <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+        </ng-container>
+
+
+        <!-- imagen -->
+        <ng-container matColumnDef="imagen">
+          <th mat-header-cell *matHeaderCellDef> Imagen </th>
+          <td mat-cell *matCellDef="let element">
+            <!-- Verifica si la imagen no está vacía y muestra el botón -->
+            @if(element.imagen !== ""){
+            <button title="Imagen"
+              (click)="showImageModal(template, element.id_historial, element.titulo, element.imagen)" mat-icon-button>
+              <mat-icon>image</mat-icon>
+            </button>
+            }
+          </td>
+        </ng-container>
+
+        <!-- documento -->
+        <ng-container matColumnDef="documento">
+          <th mat-header-cell *matHeaderCellDef> Documento </th>
+          <td mat-cell *matCellDef="let element">
+            <!-- Valida que exista un documento -->
+            @if(element.documento !== ""){
+            <!-- Manda el nombre del documento para descargarlo -->
+            <button title="Descargar documento" (click)="documento($event,element.documento)" mat-icon-button>
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+            }
+          </td>
+        </ng-container>
+        <!-- Cabecera -->
+        <tr mat-header-row *matHeaderRowDef="historialColumns"></tr>
+        <!-- Filas -->
+        <tr mat-row *matRowDef="let row; columns: historialColumns;"></tr>
+      </table>
+      <!-- Numero de registros  -->
+      <mat-paginator showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </div>
+  <!-- Footer del modal -->
+  <div class="modal-footer bg-dark text-white bottom-modal">
+  </div>
+</ng-template>
+
+<!-- Modal para actualziar el estado de las citas -->
+<ng-template #updateModal id="darkModal">
+  <!-- Header del modal -->
+  <div class="modal-header bg-dark text-white top-modal"
+    style="display: flex; align-items: center; justify-content: space-between;">
+    <h4 style="font-size: 20px;">Cambiar estado de la cita</h4>
+    <!-- Boton para cerrar -->
+    <button mat-icon-button (click)="modalRef.hide()"><mat-icon style="color: #ffffff;">close</mat-icon></button>
+  </div>
+  <!-- Contenido del modal -->
+  <div class="modal-body bg-dark text-white" style="display: flex; align-items: center; justify-content: center;">
+    <form class="form">
+      <mat-form-field>
+        <mat-label>Cambiar estado de la cita a: </mat-label>
+        <select matNativeControl #estado required>
+          <option value="espera">espera</option>
+          <option value="terminada">terminada</option>
+          <option value="cancelada">cancelada</option>
+        </select>
+      </mat-form-field>
+      <button mat-flat-button (click)="update($event, estado.value)">Actualizar estado</button>
+    </form>
+  </div>
+  <!-- Footer del modal -->
+  <div class="modal-footer bg-dark text-white bottom-modal">
+  </div>
+</ng-template>
+
+<!-- Modal de la receta  -->
+<ng-template #recetaModal id="darkModal">
+  <!-- Header del modal -->
+  <div class="modal-header bg-dark text-white top-modal"
+    style="display: flex; align-items: center; justify-content: space-between;">
+    <h4 style="font-size: 20px;">Registro de la receta de {{nombre}}</h4>
+    <!-- Boton para cerrar -->
+    <button mat-icon-button (click)="modalRef.hide()"><mat-icon style="color: #ffffff;">close</mat-icon></button>
+  </div>
+  <!-- Contenido del modal -->
+  <div class="modal-body bg-dark text-white" style="display: flex; align-items: center; justify-content: center;">
+    <form class="form">
+      <!-- <mat-form-field style="width: 45%;">
+        <mat-label>Edad:</mat-label>
+        <input matInput #edad required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field> -->
+      <mat-form-field style="width: 45%;">
+        <mat-label>Alergias:</mat-label>
+        <input matInput #alergias required type="text">
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field style="width: 45%;">
+        <mat-label>Estatura en cm:</mat-label>
+        <input matInput #estatura required type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field style="width: 45%;">
+        <mat-label>Peso kg:</mat-label>
+        <input matInput #peso required type="text"
+          onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 46">
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field style="width: 45%;">
+        <mat-label>Fecha:</mat-label>
+        <input matInput #fecha required onkeypress="return false" type="text" #fechaCita bsDatepicker
+          [bsConfig]="bsConfig">
+        <mat-icon matSuffix>date_range</mat-icon>
+      </mat-form-field>
+      <mat-form-field style="width: 45%;">
+        <mat-label>Temperatura:</mat-label>
+        <input matInput #temperatura onkeypress="return event.charCode >= 48 && event.charCode <= 57" required
+          type="text">
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field style="width: 45%;">
+        <mat-label>T/A:</mat-label>
+        <input matInput #t_a required onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="text">
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+      <mat-form-field style="width: 92%;">
+        <mat-label>Diagnóstico:</mat-label>
+        <input matInput #diagnostico required type="text">
+        <mat-icon matSuffix>create</mat-icon>
+      </mat-form-field>
+      <mat-form-field style="width: 92%;">
+        <mat-label>Tratamiento:</mat-label>
+        <input matInput #tratamiento required type="text">
+        <mat-icon matSuffix>create</mat-icon>
+      </mat-form-field>
+      <button mat-flat-button
+        (click)="registro($event, estatura.value, peso.value, diagnostico.value, fecha.value, alergias.value, temperatura.value, tratamiento.value, t_a.value)">Registrar
+        y generar receta</button>
+    </form>
+  </div>
+  <!-- Footer del modal -->
+  <div class="modal-footer bg-dark text-white bottom-modal">
+  </div>
+</ng-template>
+
+<!-- Modal para modatrar las imagenes -->
+<ng-template #template id="darkModal">
+  <!-- Header del modal -->
+  <div class="modal-header bg-dark text-white top-modal"
+    style="display: flex; align-items: center; justify-content: space-between;">
+    <h4 style="font-size: 20px;">No.{{numRH}}</h4>
+    <h4 style="font-size: 20px;">Nombre: {{nomRH}}</h4>
+    <!-- Boton para cerrar -->
+    <button mat-icon-button (click)="modalRef.hide()"><mat-icon style="color: #ffffff;">close</mat-icon></button>
+  </div>
+  <!-- Contenido del modal -->
+  <div class="modal-body bg-dark text-white" style="display: flex; align-items: center; justify-content: center;">
+    <!-- Cambia la imagen dinamicamente -->
+    <img [src]="imagenModal" style="width: 90%; height: 90%;" />
+  </div>
+  <!-- Footer del modal -->
+  <div class="modal-footer bg-dark text-white bottom-modal">
+  </div>
+</ng-template>

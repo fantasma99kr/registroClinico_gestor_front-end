@@ -1,0 +1,59 @@
+/* Tabla */
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.contenedor{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 50px;
+    width: 100%;
+}
+
+.contenedor-card {
+    display: flex;
+    justify-content: center;
+	flex-wrap: wrap;
+    color: #ffffff;
+    margin: 25px;
+    padding: 10px;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.form > mat-form-field {
+    margin: 10px;
+}
+
+@media only screen and (max-width: 500px) {
+    form > mat-form-field {
+      width: 90%!important;
+    }
+  }
+
+.top-modal {
+    border-top-left-radius: 5px!important;
+    border-top-right-radius: 5px!important;
+}
+
+.bottom-modal {
+    border-bottom-left-radius: 5px!important;
+    border-bottom-right-radius: 5px!important;
+}
+
+.custom-snackbar{
+    z-index: 9000000000;
+}

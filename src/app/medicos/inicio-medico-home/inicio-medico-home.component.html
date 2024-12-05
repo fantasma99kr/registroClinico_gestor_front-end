@@ -1,0 +1,70 @@
+<section class="contenedor">
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f;">
+        <mat-card-header>
+            <mat-card-title style="color: #ffffff; margin-bottom: 25px;">
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Formulario medico -->
+            <!-- Formulario medico -->
+            <form class="form">
+                <h5>Cambiar contraseña</h5>
+                <label style="text-align: center;">Mínimo 5 caracteres de largo y al menos alguno de los siguientes
+                    caracteres especiales # $ % ^ &</label>
+                <!-- Contraseña -->
+                <mat-form-field>
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput #password [type]="hide() ? 'password' : 'text'" required>
+                    <!-- Llama a la funcion hide y muestra la contraseña -->
+                    <a mat-icon-button matSuffix (click)="pass($event)">
+                        <!--Cambia el icono de la contraseña  -->
+                        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </a>
+                </mat-form-field>
+
+                <!-- Repite contraseña -->
+                <mat-form-field class="">
+                    <mat-label>Repite la contraseña</mat-label>
+                    <input matInput #repeatpass [type]="hide1() ? 'password' : 'text'" required>
+                    <!-- Llama a la funcion hide y muestra la contraseña -->
+                    <a mat-icon-button matSuffix (click)="passRepet($event)">
+                        <!--Cambia el icono de la contraseña  -->
+                        <mat-icon>{{hide1() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </a>
+                </mat-form-field>
+
+                <!-- Boton -->
+                <button mat-flat-button (click)="passUpdate($event ,password.value, repeatpass.value )">Cambiar contraseña</button>
+                
+                <mat-divider style="width: 90%; padding: 15px; margin: 15px;"></mat-divider>
+
+                <!-- Datos generales -->
+
+                <h5>Datos del médico</h5>
+                <!-- Nombre -->
+                <mat-form-field class="">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput #nombre type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 192 && event.charCode <= 255) || (event.charCode === 209 || event.charCode === 241) || (event.charCode === 32)" required>
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+
+                <!-- Apellidos -->
+                <mat-form-field class="">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput #apellidos type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 192 && event.charCode <= 255) || (event.charCode === 209 || event.charCode === 241) || (event.charCode === 32)" required>
+                    <mat-icon matSuffix>person</mat-icon>
+                </mat-form-field>
+
+                <!-- Apellidos -->
+                <mat-form-field class="">
+                    <mat-label>Cedula</mat-label>
+                    <input matInput #cedula type="text" required>
+                    <mat-icon matSuffix>perm_identity</mat-icon>
+                </mat-form-field>
+
+                <!-- Boton -->
+                <button mat-flat-button (click)="update($event ,nombre.value ,apellidos.value, cedula.value)">Actualizar datos</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</section>

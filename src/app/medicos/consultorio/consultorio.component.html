@@ -1,0 +1,192 @@
+<section class="contenedor" style="margin-bottom: 50px;">
+
+    <!-- Mapa -->
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f; width: 100%; margin-bottom: 50px;">
+        <!-- Header -->
+        <mat-card-header
+            style="padding: 15px; display: flex; flex-direction: column; justify-content: start; align-items: center;">
+            <h5 style="margin: 10px;">Direccion del consultorio</h5>
+            <label style="margin: 10px;">Busca tu direccion o da clic en Localizarme</label>
+            <mat-divider style="padding: 15px; margin: 15ox; width: 90%;"></mat-divider>
+        </mat-card-header>
+        <!-- Contenido del contenedor del mapa -->
+        <mat-card-content style="display: flex; flex-direction: column;">
+            <div style="padding: 10px; display: flex; justify-content: space-between;">
+                <button mat-flat-button (click)="locateMe()">
+                    Localizarme
+                </button>
+                <label style="padding: 5px;"><strong>Nota.</strong> Para localizarte, permite el uso de la ubicación del
+                    navegador.</label>
+            </div>
+            <!-- Mapa -->
+            <div id="map" style="height: 500px; padding: 15px;" #map></div>
+        </mat-card-content>
+
+        <!-- Input para buscar direccion por nombre -->
+        <mat-card-actions style="display: flex; flex-direction: column; justify-content: center;">
+            <mat-divider style="padding: 15px; margin: 15ox; width: 90%;"></mat-divider>
+            <button mat-flat-button (click)="updateDirection()">
+                Guardar direccion
+            </button>
+        </mat-card-actions>
+
+    </mat-card>
+    
+    <!-- Info del consultorio -->
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f;">
+        <mat-card-header style="justify-content: center; align-items: center;">
+            <mat-card-title>Datos generales del consultorio</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Formulario -->
+            <form class="form">
+                <mat-divider style="padding: 15px; margin: 15ox; width: 90%;"></mat-divider>
+                <mat-form-field>
+                    <mat-label>Nombre del consultorio</mat-label>
+                    <input #nombre type="text" matInput required />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Teléfono:</mat-label>
+                    <input #telefono type="text" matInput required />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Correo (Opcional):</mat-label>
+                    <input #correo type="text" matInput required />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Especialidad:</mat-label>
+                    <input #especialidad type="text" matInput required />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Información extra (Opcional):</mat-label>
+                    <input #informacion type="text" matInput required />
+                </mat-form-field>
+                <mat-divider style="padding: 15px; margin: 15ox; width: 90%;"></mat-divider>
+                <div>
+                    <label>Selecciona los dias de servicio del consultorio:</label><br>
+                    <br><label class="container-checkbox">Domingo<input type="checkbox" id="domingoCheckbox" #domingoCheckbox><span class="checkmark"></span></label>
+                    <br><label class="container-checkbox">Lunes<input type="checkbox" id="lunesCheckbox" #lunesCheckbox><span class="checkmark"></span></label>
+                    <br><label class="container-checkbox">Martes<input type="checkbox" id="martesCheckbox" #martesCheckbox><span class="checkmark"></span></label>
+                    <br><label class="container-checkbox">Miércoles<input type="checkbox" id="miercolesCheckbox" #miercolesCheckbox><span class="checkmark"></span></label>
+                    <br><label class="container-checkbox">Jueves<input type="checkbox" id="juevesCheckbox" #juevesCheckbox><span class="checkmark"></span></label>
+                    <br><label class="container-checkbox">Viernes<input type="checkbox" id="viernesCheckbox" #viernesCheckbox><span class="checkmark"></span></label>
+                    <br><label class="container-checkbox">Sábado<input type="checkbox" id="sabadoCheckbox" #sabadoCheckbox><span class="checkmark"></span></label>
+                </div>
+                <mat-divider style="padding: 15px; margin: 15ox; width: 90%;"></mat-divider>
+                <mat-form-field>
+                    <mat-label>Hora de apertura del consultorio:</mat-label>
+                    <select matNativeControl #abre required>
+                        <option value="00:00:00">00:00:00</option>
+                        <option value="00:30:00">00:30:00</option>
+                        <option value="01:00:00">01:00:00</option>
+                        <option value="01:30:00">01:30:00</option>
+                        <option value="02:00:00">02:00:00</option>
+                        <option value="02:30:00">02:30:00</option>
+                        <option value="03:00:00">03:00:00</option>
+                        <option value="03:30:00">03:30:00</option>
+                        <option value="04:00:00">04:00:00</option>
+                        <option value="04:30:00">04:30:00</option>
+                        <option value="05:00:00">05:00:00</option>
+                        <option value="05:30:00">05:30:00</option>
+                        <option value="06:00:00">06:00:00</option>
+                        <option value="06:30:00">06:30:00</option>
+                        <option value="07:00:00">07:00:00</option>
+                        <option value="07:30:00">07:30:00</option>
+                        <option value="08:00:00">08:00:00</option>
+                        <option value="08:30:00">08:30:00</option>
+                        <option value="09:00:00">09:00:00</option>
+                        <option value="09:30:00">09:30:00</option>
+                        <option value="10:00:00">10:00:00</option>
+                        <option value="10:30:00">10:30:00</option>
+                        <option value="11:00:00">11:00:00</option>
+                        <option value="11:30:00">11:30:00</option>
+                        <option value="12:00:00">12:00:00</option>
+                        <option value="12:30:00">12:30:00</option>
+                        <option value="13:00:00">13:00:00</option>
+                        <option value="13:30:00">13:30:00</option>
+                        <option value="14:00:00">14:00:00</option>
+                        <option value="14:30:00">14:30:00</option>
+                        <option value="15:00:00">15:00:00</option>
+                        <option value="15:30:00">15:30:00</option>
+                        <option value="16:00:00">16:00:00</option>
+                        <option value="16:30:00">16:30:00</option>
+                        <option value="17:00:00">17:00:00</option>
+                        <option value="17:30:00">17:30:00</option>
+                        <option value="18:00:00">18:00:00</option>
+                        <option value="18:30:00">18:30:00</option>
+                        <option value="19:00:00">19:00:00</option>
+                        <option value="19:30:00">19:30:00</option>
+                        <option value="20:00:00">20:00:00</option>
+                        <option value="20:30:00">20:30:00</option>
+                        <option value="21:00:00">21:00:00</option>
+                        <option value="21:30:00">21:30:00</option>
+                        <option value="22:00:00">22:00:00</option>
+                        <option value="22:30:00">22:30:00</option>
+                        <option value="23:00:00">23:00:00</option>
+                        <option value="23:30:00">23:30:00</option>
+                        <option value="24:00:00">24:00:00</option>
+                    </select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Hora de cierre del consultorio:</mat-label>
+                    <select matNativeControl #cierra required>
+                        <option value="00:00:00">00:00:00</option>
+                        <option value="00:30:00">00:30:00</option>
+                        <option value="01:00:00">01:00:00</option>
+                        <option value="01:30:00">01:30:00</option>
+                        <option value="02:00:00">02:00:00</option>
+                        <option value="02:30:00">02:30:00</option>
+                        <option value="03:00:00">03:00:00</option>
+                        <option value="03:30:00">03:30:00</option>
+                        <option value="04:00:00">04:00:00</option>
+                        <option value="04:30:00">04:30:00</option>
+                        <option value="05:00:00">05:00:00</option>
+                        <option value="05:30:00">05:30:00</option>
+                        <option value="06:00:00">06:00:00</option>
+                        <option value="06:30:00">06:30:00</option>
+                        <option value="07:00:00">07:00:00</option>
+                        <option value="07:30:00">07:30:00</option>
+                        <option value="08:00:00">08:00:00</option>
+                        <option value="08:30:00">08:30:00</option>
+                        <option value="09:00:00">09:00:00</option>
+                        <option value="09:30:00">09:30:00</option>
+                        <option value="10:00:00">10:00:00</option>
+                        <option value="10:30:00">10:30:00</option>
+                        <option value="11:00:00">11:00:00</option>
+                        <option value="11:30:00">11:30:00</option>
+                        <option value="12:00:00">12:00:00</option>
+                        <option value="12:30:00">12:30:00</option>
+                        <option value="13:00:00">13:00:00</option>
+                        <option value="13:30:00">13:30:00</option>
+                        <option value="14:00:00">14:00:00</option>
+                        <option value="14:30:00">14:30:00</option>
+                        <option value="15:00:00">15:00:00</option>
+                        <option value="15:30:00">15:30:00</option>
+                        <option value="16:00:00">16:00:00</option>
+                        <option value="16:30:00">16:30:00</option>
+                        <option value="17:00:00">17:00:00</option>
+                        <option value="17:30:00">17:30:00</option>
+                        <option value="18:00:00">18:00:00</option>
+                        <option value="18:30:00">18:30:00</option>
+                        <option value="19:00:00">19:00:00</option>
+                        <option value="19:30:00">19:30:00</option>
+                        <option value="20:00:00">20:00:00</option>
+                        <option value="20:30:00">20:30:00</option>
+                        <option value="21:00:00">21:00:00</option>
+                        <option value="21:30:00">21:30:00</option>
+                        <option value="22:00:00">22:00:00</option>
+                        <option value="22:30:00">22:30:00</option>
+                        <option value="23:00:00">23:00:00</option>
+                        <option value="23:30:00">23:30:00</option>
+                        <option value="24:00:00">24:00:00</option>
+                    </select>
+                </mat-form-field>
+                <mat-divider style="padding: 15px; margin: 15ox; width: 90%;"></mat-divider>
+                <button mat-flat-button
+                    (click)="update($event, nombre.value, telefono.value, correo.value, especialidad.value,  informacion.value, abre.value, cierra.value)">
+                    Guardar
+                </button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</section>

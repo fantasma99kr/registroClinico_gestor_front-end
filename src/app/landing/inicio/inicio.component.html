@@ -1,0 +1,38 @@
+<!-- Menu -->
+<mat-toolbar class="inicio-nav">
+    <div class="logo-inicio-menu">
+        <a mat-button href="" title="FindMedic">
+            <a>FindMedic</a>
+        </a>
+    </div>
+
+    <div class="opciones-inicio-menu">
+        <a mat-button  routerLink="" >Home</a>
+        <a mat-button routerLink="info">Info</a>
+    </div>
+    
+    <div class="login-registro">
+        <a mat-flat-button href="login" class="login-boton">Login</a>
+        <a mat-flat-button href="registro" class="registro-boton">Registro</a>
+    </div>
+</mat-toolbar>
+<!-- Contenido -->
+<div class="home-info" style="margin-top: 25px;">
+    <router-outlet></router-outlet>
+</div>
+<!-- Footer -->
+<footer>
+    <div class="footer-logo">
+        <span>Plata Avila Jesús</span>
+    </div>
+    <div class="footer-texto">
+        <span>Insituto Tecnológico de Tláhuac</span>
+    </div>
+</footer>
+
+
+
+
+
+
+

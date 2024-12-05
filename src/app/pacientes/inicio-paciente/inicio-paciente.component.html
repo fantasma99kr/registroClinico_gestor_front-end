@@ -1,0 +1,67 @@
+<section class="main-div">
+    <!-- Barra superior -->
+    <mat-toolbar class="inicio-pacientes">
+        <div class="">
+            <a mat-icon-button style="color: #ffffff!important;" title="Menú" (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </a>
+        </div>
+        <div class="">
+            <button mat-icon-button (click)="logout()" style="color: #ffffff!important;" title="Cerrar sesión">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+
+    <!-- Menu lateral -->
+    <mat-drawer-container class="container-navbar" autosize>
+        <mat-drawer #drawer opened class="sidenav-menu-container" mode="side">
+            <div class="sidenav-menu">
+                <p>Paciente</p>
+                <mat-divider style="margin-top: 25px; margin-bottom: 25px;"></mat-divider>
+                <div class="button-menu-dash-pacientes">
+                    <a mat-button routerLink="/paciente" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-button">
+                        <mat-icon>home</mat-icon>
+                        Home
+                    </a>
+                    <p></p>
+                    <a mat-button routerLink="/paciente/citas" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-button">
+                        <mat-icon>note_add</mat-icon>
+                        Citas
+                    </a>
+                    <p></p>
+                    <a mat-button routerLink="/paciente/new-cita" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-button">
+                        <mat-icon>add_location</mat-icon>
+                        Generar Cita
+                    </a>
+                    <p></p>
+                    <a mat-button routerLink="/paciente/historial-clinico-paciente" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-button">
+                        <mat-icon>folder_shared</mat-icon>
+                        Historial Clínico
+                    </a>
+                    <p></p>
+                    <a mat-button routerLink="/paciente/recetas" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-button">
+                        <mat-icon>folder_shared</mat-icon>
+                        Historial de las recetas
+                    </a>
+                </div>
+            </div>
+        </mat-drawer>
+
+        <!-- Contenido -->
+        <mat-drawer-content class="sidenav-content">
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-logo">
+                <span>Plata Avila Jesús</span>
+            </div>
+            <div class="footer-texto">
+                <span>Insituto Tecnológico de Tláhuac</span>
+            </div>
+        </footer>
+</section>

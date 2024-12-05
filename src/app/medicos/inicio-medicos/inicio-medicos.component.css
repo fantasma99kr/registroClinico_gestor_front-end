@@ -1,0 +1,87 @@
+.inicio-medicos {
+    background-color: rgba(55, 55, 55, 0.85);
+    color: #ffffff!important; 
+    display: flex;
+    justify-content: space-between;
+}
+
+.inicio-medicos > div > :hover{
+    background-color: #000000;
+}
+
+.main-div {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+
+}
+
+.container-navbar {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    background-color: transparent;
+    
+}
+
+.sidenav-content{
+    margin: 0;
+}
+
+.sidenav-menu-container {
+    background-color: transparent;
+    padding: 10px;
+    width: 270px;
+    text-align: center;
+}
+
+.sidenav-menu {
+    background-color: rgba(55, 55, 55, 0.85);
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 15px;
+    height: 90%;
+}
+
+.button-menu-dash-medicos {
+    width: 100%;
+    text-align: left;
+}
+
+.button-menu-dash-medicos > * {
+    color: #ffffff!important;
+}
+
+.button-menu-dash-medicos > *:hover {
+    background-color: #000000;
+}
+
+/* Ruta en la que se encutra cambia de color el boton */
+.active-button {
+    background-color: #000000;
+}
+
+/* Estilo del footer */
+footer {
+    height: 27px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: rgba(55, 55, 55, 0.85);
+    color: #ffffff; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 7;
+}
+
+.footer-logo{
+    padding-left: 15px;
+}
+
+.footer-texto{
+    padding-right: 15px;
+}
+
+
+

@@ -1,0 +1,85 @@
+<!-- Info del sistema -->
+<section class="contenedor-general">
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f;">
+        <mat-card-header style="justify-content: center; align-items: center;">
+            <mat-card-title>FindMedic</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <br>
+            <label>Sistema para la localizacion de consultorios pequeños cercanos, generacion de citas y registro del historial medico en la localidad de San Juan Tlalpizahuac.</label>
+            <p></p>
+        </mat-card-content>
+    </mat-card>
+</section>
+
+
+<section class="contenedor-general" style="margin-bottom: 50px;">
+
+    <!-- Mapa -->
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f; width: 100%; margin-bottom: 50px;">
+
+        <mat-card-header style="padding: 15px; display: flex; justify-content: start; align-items: center;">
+            <button mat-flat-button (click)="locateMe()">
+                Buscarme en el mapa
+            </button>
+            <label style="margin: 10px;"><strong>Nota.</strong> Para localizarte, permite el uso de la ubicación del navegador.</label>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div id="map" style="height: 500px;"></div>
+        </mat-card-content>
+
+        <!-- Input para buscar direccion por nombre -->
+        <!-- <mat-card-actions style="display:flex; align-items:center; justify-content: center;">
+            <mat-form-field style="margin: 10px; width: 70%;">
+                <mat-label>Busqueda de la direccion:</mat-label>
+                <input matInput #lugar type="text">
+                <mat-icon matSuffix>location_on</mat-icon>
+            </mat-form-field>
+            <button mat-flat-button (click)="searchPlace($event,lugar.value)">Buscar</button>
+        </mat-card-actions> -->
+        
+    </mat-card>
+    <!-- Info del consultorio -->
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f;">
+        <mat-card-header style="justify-content: center; align-items: center;">
+            <mat-card-title>Información del consultorio</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <label>Da clic en alguno de los consultorios del mapa para ver su informacion.</label>
+            <p></p>
+            <br>
+            <label><strong>Direccion: </strong>
+                <label id="direccion"></label>
+            </label>
+            <br>
+            <label><strong>Telefono: </strong>
+                <label id="telefono"></label>
+            </label>
+            <br>
+            <label><strong>Especialidad: </strong>
+                <label id="especialidad"></label>
+            </label>
+            <br>
+            <label><strong>Horario: </strong>
+                <label id="horario"></label>
+            </label>
+            <br>
+            <label><strong>Información: </strong>
+                <label id="informacion"></label>
+            </label>
+            <br>
+            <label><strong>Días disponbles:</strong></label>
+            <br>
+            <div id="dias">
+                <button id="lu">Lu</button>
+                <button id="ma">Ma</button>
+                <button id="mi">Mi</button>
+                <button id="ju">Ju</button>
+                <button id="vi">Vi</button>
+                <button id="sa">Sá</button>
+                <button id="do">Do</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</section>

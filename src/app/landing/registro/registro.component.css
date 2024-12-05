@@ -1,0 +1,30 @@
+/* Contenedor general */
+.registro {
+    display: flex;
+    justify-content: center;
+    color: #ffffff;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-bottom: 50px;
+}
+
+/* Formulario */
+.registro-usuario-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 400px;
+    color: #ffffff;
+}
+
+/* Inputs */
+.registro-usuario-form > mat-form-field {
+    width: 90%;
+    margin-top: 10px;
+}
+
+/* Cambia la font color de los taps */
+::ng-deep .mdc-tab__text-label {
+    color: #ffffff!important;
+}

@@ -1,0 +1,23 @@
+#map {
+    height: 100%;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.contenedor-general{
+    display: flex;
+    justify-content: center;
+	flex-wrap: wrap;
+}
+
+.contenedor-card {
+    color: #ffffff;
+    max-width: 1000px;
+    min-width: 500px;
+    margin: 25px;
+    padding: 10px;
+}
+
+::ng-deep mat-list-item {
+    color: #ffffff!important;
+}

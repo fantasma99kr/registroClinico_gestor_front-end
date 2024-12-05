@@ -1,0 +1,73 @@
+<section class="contenedor" style="margin-bottom: 50px;">
+    <!-- Contenedor de la Tabla -->
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f; overflow: auto;">
+        <mat-card-header style="display: flex; justify-content: center; padding: 15px;">
+            <mat-card-title style="color: #ffffff;">
+                Citas registradas
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Busqueda en la tabla -->
+            <mat-form-field style="width: 100%;">
+                <mat-label>Busqueda</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+            <!-- Tabla -->
+            <div class="table-container">
+                <!-- Tabla del historial clinico -->
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <!-- id_cita -->
+                    <ng-container matColumnDef="id_cita">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> No cita </th>
+                        <td mat-cell *matCellDef="let element" style="font-weight: bold;">{{element.id_cita}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nombre_consultorio">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre del Consultorio </th>
+                        <td mat-cell *matCellDef="let element">{{element.nombre_consultorio}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="horario">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Horario </th>
+                        <td mat-cell *matCellDef="let element" style="font-weight: bold;">{{element.horario}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                        <td mat-cell *matCellDef="let element" style="font-weight: bold;">{{element.fecha}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="permiso_historial">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Permiso para ver el Historial </th>
+                        <td mat-cell *matCellDef="let element">{{element.permiso_historial}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="datos_adicionales">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Datos Adicionales </th>
+                        <td mat-cell *matCellDef="let element">{{element.datos_adicionales}}
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+                        <td mat-cell *matCellDef="let element">{{element.estado}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tipo_cita">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de cita </th>
+                        <td mat-cell *matCellDef="let element">{{element.tipo_cita}}</td>
+                    </ng-container>
+
+                    <!-- Cabecera -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <!-- Filas -->
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <!-- Paginador  -->
+                <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</section>

@@ -1,0 +1,64 @@
+<div class="main-div">
+    <!-- Barra superior -->
+    <mat-toolbar class="inicio-medicos">
+        <div class="">
+            <a mat-icon-button style="color: #ffffff!important;" title="Menú" (click)="drawer.toggle()">
+                <mat-icon>menu</mat-icon>
+            </a>
+        </div>
+        <div class="">
+            <button mat-icon-button (click)="logout()" style="color: #ffffff!important;" title="Cerrar sesión">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+
+    <!-- Menu lateral -->
+    <mat-drawer-container class="container-navbar" autosize>
+        <mat-drawer #drawer opened class="sidenav-menu-container" mode="side">
+            <div class="sidenav-menu">
+                <p>Médico</p>
+                <mat-divider style="margin-top: 25px; margin-bottom: 25px;"></mat-divider>
+                <div class="button-menu-dash-medicos">
+                    <a mat-button routerLink="/medico" [routerLinkActiveOptions]="{ exact: true }"
+                        routerLinkActive="active-button">
+                        <mat-icon>home</mat-icon>
+                        Home
+                    </a>
+                    <!-- <p></p>
+                    <a mat-button routerLink="/medico/consultorio" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active-button">
+                        <mat-icon>add_location</mat-icon>
+                        Consultorio
+                    </a> -->
+                    <p></p>
+                    <a mat-button routerLink="/medico/gestor-citas" [routerLinkActiveOptions]="{ exact: true }"
+                        routerLinkActive="active-button">
+                        <mat-icon>date_range</mat-icon>
+                        Gestion de citas
+                    </a>
+                    <p></p>
+                    <a mat-button routerLink="/medico/recetas-prescritas" [routerLinkActiveOptions]="{ exact: true }"
+                        routerLinkActive="active-button">
+                        <mat-icon>create_new_folder</mat-icon>
+                        Recetas prescritas
+                    </a>
+                </div>
+            </div>
+        </mat-drawer>
+
+        <!-- Contenido -->
+        <mat-drawer-content class="sidenav-content">
+            <router-outlet></router-outlet>
+        </mat-drawer-content>
+    </mat-drawer-container>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">
+            <span>Plata Avila Jesús</span>
+        </div>
+        <div class="footer-texto">
+            <span>Insituto Tecnológico de Tláhuac</span>
+        </div>
+    </footer>
+</div>

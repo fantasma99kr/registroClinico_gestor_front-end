@@ -1,0 +1,67 @@
+#map {
+    height: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    z-index: 0;
+}
+
+.contenedor{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+}
+
+.contenedor-card {
+    background-color: #1a1c1f;
+    color: #ffffff;
+    max-width: 700px;
+    margin: 15px;
+    padding: 10px;
+    height: 100%;
+}
+
+#dias {
+    margin-top: 5px;
+}
+
+#dias > * {
+    margin: 10px;
+    height: 35px;
+    width: 35px;
+    background-color: #000000;
+    border-radius: 50%;
+    color: #ffffff;
+    border: 0;
+}
+
+.top-modal {
+    border-top-left-radius: 5px!important;
+    border-top-right-radius: 5px!important;
+}
+
+.bottom-modal {
+    border-bottom-left-radius: 5px!important;
+    border-bottom-right-radius: 5px!important;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ffffff;
+}
+
+.form > mat-form-field{
+    width: 90%!important;
+}
+
+.modal { 
+    background-color: transparent !important; 
+}
+
+.custom-snackbar {
+    z-index: 25;
+}

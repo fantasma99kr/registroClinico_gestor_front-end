@@ -1,0 +1,130 @@
+<section class="contenedor" style="margin-bottom: 50px;">
+    <!-- Mapa -->
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f;">
+        <mat-card-header style="padding: 15px; display: flex; justify-content: start; align-items: center;">
+            <button mat-flat-button (click)="locateMe()">
+                Buscarme
+            </button>
+            <label style="margin: 10px;"><strong>Nota.</strong> Para localizarte, permite el uso de la ubicación del
+                navegador.</label>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- Mapa -->
+            <div id="map" style="height: 500px;"></div>
+        </mat-card-content>
+    </mat-card>
+    <!-- Info del consultorio -->
+    <mat-card class="contenedor-card" style="background-color: #1a1c1f;">
+        <mat-card-header style="justify-content: center; align-items: center;">
+            <mat-card-title>Información del consultorio</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <label>Da clic en alguno de los consultorios del mapa para ver su informacion y poder generar una
+                cita.</label>
+            <p></p>
+            <br>
+            <label><strong>Direccion: </strong>
+                <label id="direccion"></label>
+            </label>
+            <br>
+            <label><strong>Telefono: </strong>
+                <label id="telefono"></label>
+            </label>
+            <br>
+            <label><strong>Correo del consultorio: </strong>
+                <label id="correo"></label>
+            </label>
+            <br>
+            <label><strong>Especialidad: </strong>
+                <label id="especialidad"></label>
+            </label>
+            <br>
+            <label><strong>Horario: </strong>
+                <label id="horario"></label>
+            </label>
+            <br>
+            <label><strong>Días disponbles:</strong></label>
+            <br>
+            <div id="dias">
+                <button id="lu">Lu</button>
+                <button id="ma">Ma</button>
+                <button id="mi">Mi</button>
+                <button id="ju">Ju</button>
+                <button id="vi">Vi</button>
+                <button id="sa">Sá</button>
+                <button id="do">Do</button>
+            </div>
+        </mat-card-content>
+        <mat-card-footer style="padding: 15px; display: flex; justify-content: center; align-items: center;">
+            <button mat-flat-button (click)="openModal(citaModal)">
+                Nueva cita
+            </button>
+        </mat-card-footer>
+    </mat-card>
+</section>
+
+<!-- Modal para modatrar las imagenes -->
+<ng-template #citaModal id="darkModal">
+    <!-- Header del modal -->
+    <div class="modal-header bg-dark text-white top-modal"
+        style="display: flex; align-items: center; justify-content: space-between;">
+        <!-- Boton para cerrar -->
+        <h5>Consultorio: {{this.infoCon.nombre}}</h5>
+        <button mat-icon-button (click)="modalRef.hide()"><mat-icon style="color: #ffffff;">close</mat-icon></button>
+    </div>
+    <!-- Contenido del modal -->
+    <div class="modal-body bg-dark text-white">
+        <form class="form">
+            <p><strong>Horario: </strong>{{this.infoCon.abre_h}} - {{this.infoCon.cierra_h}}</p>
+            <br>
+            <!-- Fecha de la cita -->
+            <mat-form-field>
+                <mat-label>Fecha de la consulta:</mat-label>
+                <input type="text" #fechaCita bsDatepicker [bsConfig]="bsConfig" onkeypress="return false" matInput
+                    (bsValueChange)="onDateChange($event)" required>
+            </mat-form-field>
+            <br>
+            <!-- Horario -->
+            <mat-form-field>
+                <mat-label>Selecciona un horario disponible: </mat-label>
+                <select #horariocita matNativeControl id="horariocita" required>
+                    <option value="" disabled selected>Seleccione un horario</option>
+                </select>
+            </mat-form-field>
+            <br>
+            <!-- Tipo de cita -->
+            <mat-form-field>
+                <mat-label>Tipo de cita: </mat-label>
+                <select matNativeControl #tipocita required>
+                    <option value="general">general</option>
+                    <option value="seguimiento">seguimiento</option>
+                    <option value="urgencia">urgencia</option>
+                    <option value="especialidad">especialidad</option>
+                </select>
+            </mat-form-field>
+            <br>
+            <!-- Permisos para ver el historial -->
+            <mat-form-field>
+                <mat-label>Permiso para ver el historial: </mat-label>
+                <select matNativeControl #permisos required>
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                </select>
+            </mat-form-field>
+            <br>
+            <!-- Titulo -->
+            <mat-form-field>
+                <mat-label>Información adicional (Opcional): </mat-label>
+                <input matInput #informacionad required type="text">
+                <mat-icon matSuffix></mat-icon>
+            </mat-form-field>
+            <br>
+            <button mat-flat-button (click)="nuevaCita($event, fechaCita.value, horariocita.value, tipocita.value, informacionad.value, permisos.value)">
+                Generar cita
+            </button>
+        </form>
+    </div>
+    <!-- Footer del modal -->
+    <div class="modal-footer bg-dark text-white bottom-modal">
+    </div>
+</ng-template>

@@ -1,0 +1,34 @@
+#map {
+    height: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    z-index: 0;
+}
+
+.contenedor-general{
+    display: flex;
+    justify-content: center;
+	flex-wrap: wrap;
+}
+
+.contenedor-card {
+    color: #ffffff;
+    max-width: 900px;
+    margin: 25px;
+    padding: 10px;
+    height: 100%;
+}
+
+#dias {
+    margin-top: 5px;
+}
+
+#dias > * {
+    margin: 10px;
+    height: 35px;
+    width: 35px;
+    background-color: #005cbb;
+    border-radius: 50%;
+    color: #ffffff;
+    border: 0;
+}

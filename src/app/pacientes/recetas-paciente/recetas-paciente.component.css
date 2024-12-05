@@ -1,0 +1,26 @@
+/* Tabla */
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.contenedor{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-bottom: 50px;
+    width: 100%;
+}
+
+.contenedor-card {
+    display: flex;
+    justify-content: center;
+	flex-wrap: wrap;
+    color: #ffffff;
+    margin: 25px;
+    padding: 10px;
+}

@@ -1,0 +1,33 @@
+<div class="login-contenedor">
+    <mat-card style="background-color: #1a1c1f;">
+        <!-- Titulo -->
+        <mat-card-header mat-card-header class="" style="justify-content: center; align-items: center;">
+            <mat-card-title>Inicio de sesión</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="margin-top: 5px;">
+            <!-- Formulario inicio de sesion -->
+            <form class="login-form">
+                <!-- Correo -->
+                <mat-form-field class="">
+                    <mat-label>Correo</mat-label>
+                    <input matInput #correo type="email" required>
+                    <mat-icon matSuffix>mail_outline</mat-icon>
+                </mat-form-field>
+                <!-- Contraseña -->
+                <mat-form-field class="">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput #password [type]="hide() ? 'password' : 'text'" required>
+                    <!-- Llama a la funcion hide y muestra la contraseña -->
+                    <a mat-icon-button matSuffix (click)="iconoPassword($event)" [attr.aria-pressed]="hide()">
+                         <!--Cambia el icono de la contraseña  -->
+                        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </a>
+                </mat-form-field>
+                <!-- Botton -->
+                <mat-card-actions>
+                    <button mat-flat-button (click)="login($event, correo.value, password.value)" style="border-radius: 10px;">Iniciar sesion</button>
+                </mat-card-actions>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,144 @@
+<!-- Contenedor -->
+<div class="registro">
+    <mat-card style="background-color: #1a1c1f;">
+        <mat-card-header mat-card-header class="" style="justify-content: center; align-items: center;">
+            <mat-card-title>Registro del nuevo usuario</mat-card-title>
+        </mat-card-header>
+        <mat-card-content style="padding-top: 15px;">
+        <!-- <3 -->
+            <!-- Formulario de registro -->
+            <mat-tab-group dynamicHeight style="color: #ffffff;">
+                <!-- Paciente -->
+                <mat-tab label="Paciente">
+                    <!-- Formulario -->
+                    <form class="registro-usuario-form">
+
+                        <!-- Correo -->
+                        <mat-form-field>
+                            <mat-label>Correo</mat-label>
+                            <input #Pcorreo type="email" matInput required/>
+                            <mat-icon matSuffix>mail</mat-icon>
+                        </mat-form-field>
+                        
+                        <label style="text-align: center;">Mínimo 5 caracteres de largo y al menos alguno de los siguientes caracteres especiales # $ % ^ &</label>
+                        <!-- Contraseña -->
+                        <mat-form-field>
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput #Ppass [type]="hide() ? 'password' : 'text'" required>
+                            <!-- Llama a la funcion hide y muestra la contraseña -->
+                            <a mat-icon-button matSuffix (click)="pass($event)">
+                                <!--Cambia el icono de la contraseña  -->
+                                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </a>
+                        </mat-form-field>
+
+                        <!-- Repite contraseña -->
+                        <mat-form-field class="">
+                            <mat-label>Repite la contraseña</mat-label>
+                            <input matInput #PRpass [type]="hide1() ? 'password' : 'text'" required>
+                            <!-- Llama a la funcion hide y muestra la contraseña -->
+                            <a mat-icon-button matSuffix (click)="passRepet($event)">
+                                <!--Cambia el icono de la contraseña  -->
+                                <mat-icon>{{hide1() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </a>
+                        </mat-form-field>
+
+                        <!-- Datos personales del paciente -->
+                        <mat-divider style="padding: 5px; width: 90%;"></mat-divider>
+                        <!-- Nombre -->
+                        <mat-form-field class="">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput #Pnombre required type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 192 && event.charCode <= 255) || (event.charCode === 209 || event.charCode === 241) || (event.charCode === 32)">
+                            <mat-icon matSuffix>person</mat-icon>
+                        </mat-form-field>
+
+                        <!-- Apellidos -->
+                        <mat-form-field class="">
+                            <mat-label>Apellidos</mat-label>
+                            <input matInput #Papellidos required type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 192 && event.charCode <= 255) || (event.charCode === 209 || event.charCode === 241) || (event.charCode === 32)">
+                            <mat-icon matSuffix>person</mat-icon>
+                        </mat-form-field>
+
+                        <!-- No telefono -->
+                        <mat-form-field class="">
+                            <mat-label>Número de Teléfono</mat-label>
+                            <input required #Ptelefono type="tel" onkeypress='return event.charCode >= 48 && event.charCode <= 57' matInput>
+                            <mat-hint>Mínimo debe tener 10 digitos ejemplo - 5513140000</mat-hint>
+                            <mat-icon matSuffix>phone</mat-icon>
+                        </mat-form-field>
+                        
+                        <!-- Fecha de nacimiento -->
+                        <mat-form-field>
+                            <mat-label>Fecha de Nacimiento</mat-label>
+                            <input type="text"
+                              #Pnacimiento
+                              bsDatepicker
+                              placement="top"
+                              [bsConfig]="bsConfig" 
+                              onkeypress="return false"
+                              matInput
+                              required>
+                          </mat-form-field>
+
+                        <!-- Boton -->
+                        <button mat-flat-button (click)="registroPaciente($event, Pcorreo.value, Ppass.value, PRpass.value, Pnombre.value, Papellidos.value, Ptelefono.value, Pnacimiento.value)">Registrarse</button>
+                    </form>
+                </mat-tab>
+                <!-- Medico -->
+                <mat-tab label="Medico">
+                    <!-- Formulario medico -->
+                    <form class="registro-usuario-form">
+                        <!-- Correo -->
+                        <mat-form-field>
+                            <mat-label>Correo</mat-label>
+                            <input #Mcorreo type="email" matInput required/>
+                            <mat-icon matSuffix>mail</mat-icon>
+                        </mat-form-field>
+
+                        <label style="text-align: center;">Mínimo 5 caracteres de largo y al menos alguno de los siguientes caracteres especiales # $ % ^ &</label>
+
+                        <!-- Contraseña -->
+                        <mat-form-field>
+                            <mat-label>Contraseña</mat-label>
+                            <input matInput #Mpass [type]="hide() ? 'password' : 'text'" required>
+                            <!-- Llama a la funcion hide y muestra la contraseña -->
+                            <a mat-icon-button matSuffix (click)="pass($event)">
+                                <!--Cambia el icono de la contraseña  -->
+                                <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </a>
+                        </mat-form-field>
+
+                        <!-- Repite contraseña -->
+                        <mat-form-field class="">
+                            <mat-label>Repite la contraseña</mat-label>
+                            <input matInput #MRpass [type]="hide1() ? 'password' : 'text'" required>
+                            <!-- Llama a la funcion hide y muestra la contraseña -->
+                            <a mat-icon-button matSuffix (click)="passRepet($event)">
+                                <!--Cambia el icono de la contraseña  -->
+                                <mat-icon>{{hide1() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </a>
+                        </mat-form-field>
+
+                        <!-- Nombre -->
+                        <mat-form-field class="">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput #Mnombre required type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 192 && event.charCode <= 255) || (event.charCode === 209 || event.charCode === 241) || (event.charCode === 32)">
+                            <mat-icon matSuffix>person</mat-icon>
+                        </mat-form-field>
+
+                        <!-- Apellidos -->
+                        <mat-form-field class="">
+                            <mat-label>Apellidos</mat-label>
+                            <input matInput #Mapellidos required type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 192 && event.charCode <= 255) || (event.charCode === 209 || event.charCode === 241) || (event.charCode === 32)">
+                            <mat-icon matSuffix>person</mat-icon>
+                        </mat-form-field>
+                        
+                        <!-- Boton -->
+                        <button mat-flat-button (click)="registroMedico($event,Mcorreo.value ,Mpass.value ,MRpass.value ,Mnombre.value ,Mapellidos.value)">Registrarse</button>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
+
+        </mat-card-content>
+    </mat-card>
+</div>
